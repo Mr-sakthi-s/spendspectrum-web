@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/logo.png" >
+  <title>Expense Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      color: white;
+      overflow-x: hidden;
+    }
+
+     nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    nav h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #00ffe7, #ff6ec4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 5px;
+    }
+
+    ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    ul.nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    ul.nav-links li a:hover {
+      color: #00ffd5;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: flex; }
+      ul.nav-links {
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 40px;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+      }
+      ul.nav-links.active {
+        display: flex;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin: 20px 0;
+      background: linear-gradient(90deg, #00ffe7, #ff6ec4);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .download-button {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .download-button button {
+      padding: 10px 20px;
+      background: #00ffe7;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .type-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .tab-button {
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .tab-button.active {
+      background: #00ffd5;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .tracker-box, .history-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 25px;
+      border-radius: 15px;
+      flex: 1 1 50%;
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+      backdrop-filter: blur(10px);
+      min-width: 300px;
+    }
+
+    label {
+      margin-top: 10px;
+      display: block;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      color: #000;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00ffe7;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background-color: rgba(255,255,255,0.1);
+      color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    th {
+      background-color: rgba(0, 255, 213, 0.3);
+    }
+
+    .summary-total {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+      <h1>SpendSpectrum</h1>
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="tracker.html">Tracker</a></li>
+      <li><a href="splitter.html">Splitter</a></li>
+    
+    </ul>
+  </nav>
+
+  <h1>SmartExpense Tracker</h1>
+
+
+  <div class="type-tabs">
+    <button class="tab-button active" onclick="switchTypeTab('income', event)">Income</button>
+    <button class="tab-button" onclick="switchTypeTab('expense', event)">Spending</button>
+    <button class="tab-button" onclick="switchTypeTab('history', event)">History</button>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="tracker-box" id="formContainer"></div>
+      <div class="history-box" id="historyContainer"></div>
+    </div>
+  </div>
+
+<script>
+let currentMain = 'all';
+let currentType = 'income';
+
+const data = {
+  all: { income: [], expense: [] }
+};
+
+function toggleMenu() {
+  const menu = document.querySelector('.nav-links');
+  menu.classList.toggle('active');
+}
+
+function switchTypeTab(tab, e) {
+  currentType = tab;
+  document.querySelectorAll('.type-tabs .tab-button').forEach(btn => btn.classList.remove('active'));
+  e.target.classList.add('active');
+  renderForm();
+  renderList();
+}
+
+function renderForm() {
+  const formContainer = document.getElementById('formContainer');
+  const historyContainer = document.getElementById('historyContainer');
+  historyContainer.innerHTML = '';
+
+  if (currentType === 'history') {
+    formContainer.innerHTML = '';
+    historyContainer.innerHTML = `
+      <label for="historyFilter">Filter By:</label>
+      <select id="historyFilter" onchange="renderList()">
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+      <table id="entryTable">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Category</th>
+            <th>Payment</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="entryList"></tbody>
+      </table>
+      <div class="summary-total" id="totalDisplay"></div>
+      <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+  <div class="download-button">
+    <button onclick="downloadCSV()">Download Expense Data as CSV</button>
+  </div>
+  <div class="download-button">
+    <button onclick="clearData()">Clear All Data</button>
+  </div>
+</div>
+
+    `;
+    return;
+  }
+
+  formContainer.innerHTML = `
+    <label for="title">Category</label>
+    <input type="text" id="title" placeholder="e.g. Food, Transport, Salary" />
+    <label for="amount">Amount (₹)</label>
+    <input type="number" id="amount" placeholder="Enter amount" />
+    <label for="payment">Payment Type</label>
+    <select id="payment">
+      <option value="Cash">Cash</option>
+      <option value="Card">Card</option>
+      <option value="UPI">UPI</option>
+    </select>
+    <button onclick="addEntry()">Add Entry</button>
+  `;
+}
+
+function addEntry() {
+  const title = document.getElementById('title').value.trim();
+  const amount = parseFloat(document.getElementById('amount').value);
+  const payment = document.getElementById('payment').value;
+  const date = new Date().toLocaleDateString('en-GB');
+
+  if (!title || isNaN(amount)) return alert("Please fill all fields correctly.");
+  const entry = { title, amount, payment, date };
+  data.all[currentType].push(entry);
+  saveToLocalStorage(entry, currentType);
+  document.getElementById('title').value = '';
+  document.getElementById('amount').value = '';
+  renderList();
+}
+
+function saveToLocalStorage(entry, type) {
+  const existing = JSON.parse(localStorage.getItem("expenseData")) || {
+    daily: { income: [], expense: [] }
+  };
+
+  existing.daily[type].push({ ...entry });
+
+  localStorage.setItem("expenseData", JSON.stringify(existing));
+}
+
+function renderList() {
+  if (currentType !== 'history') return;
+
+  const stored = JSON.parse(localStorage.getItem("expenseData")) || {
+    daily: { income: [], expense: [] }
+  };
+
+  const filter = document.getElementById('historyFilter')?.value || 'daily';
+  const combined = [...stored.daily.income, ...stored.daily.expense];
+
+  const entryList = document.getElementById('entryList');
+  const totalDisplay = document.getElementById('totalDisplay');
+  entryList.innerHTML = '';
+  let total = 0;
+
+  combined.slice().reverse().forEach(e => {
+    const isIncome = stored.daily.income.includes(e);
+    const displayDate = getDisplayDate(e.date, filter);
+    const sign = isIncome ? '+' : '-';
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${displayDate}</td><td>${e.title}</td><td>${e.payment}</td><td>${sign} ₹${e.amount}</td>`;
+    entryList.appendChild(row);
+    total += isIncome ? e.amount : -e.amount;
+  });
+
+  totalDisplay.textContent = `Total: ₹${total.toFixed(2)}`;
+}
+
+function getDisplayDate(dateStr, filter) {
+  const [day, month, year] = dateStr.split('/');
+  const dateObj = new Date(`${year}-${month}-${day}`);
+
+  if (filter === 'monthly') {
+    return `${dateObj.toLocaleString('default', { month: 'long' })} ${dateObj.getFullYear()}`;
+  }
+  if (filter === 'weekly') {
+    const start = getWeekStart(dateObj);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    return `${start.toLocaleDateString('en-GB')} - ${end.toLocaleDateString('en-GB')}`;
+  }
+  return dateStr;
+}
+
+function getWeekStart(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.setDate(diff));
+}
+
+function downloadCSV() {
+  const stored = JSON.parse(localStorage.getItem("expenseData")) || {
+    daily: { income: [], expense: [] }
+  };
+
+  let csv = "Type,Date,Category,Amount,Payment\n";
+  ["income", "expense"].forEach(type => {
+    stored.daily[type].forEach(entry => {
+      const row = [
+        type,
+        entry.date,
+        entry.title,
+        entry.amount,
+        entry.payment
+      ];
+      csv += row.join(",") + "\n";
+    });
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `SmartExpenseData_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+renderForm();
+renderList();
+function clearData() {
+  const confirmClear = confirm("Are you sure you want to delete all your saved data?");
+  if (confirmClear) {
+    localStorage.removeItem("expenseData");
+    alert("Data cleared successfully.");
+    renderList(); // Refresh the history view
+  }
+}
+
+</script>
+
+</body>
+</html>

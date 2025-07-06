@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="assets/logo.png" >
+  <title>SmartExpense - Home</title>
+    <style>
+   
+       * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    nav h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #00ffe7, #ff6ec4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 5px;
+    }
+
+    ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    ul.nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    ul.nav-links li a:hover {
+      color: #00ffd5;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: flex; }
+      ul.nav-links {
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 40px;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+      }
+      ul.nav-links.active {
+        display: flex;
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 75vh;
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    header h2 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 60px 40px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      transition: transform 0.3s ease, background 0.3s ease;
+      box-shadow: 0 0 15px rgba(0,255,255,0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #00ffd5;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      color: #eee;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+      <h1>SpendSpectrum</h1>
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="tracker.html">Tracker</a></li>
+      <li><a href="splitter.html">Splitter</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h2>Track, Analyze & Save Smartly</h2>
+    <p>SmartExpense helps you control your spending habits, visualize income flows and take smarter financial decisions.</p>
+  </header>
+
+  <section class="features" style="margin-top: -30px;">
+    <div class="feature-card">
+      <h3>Real-Time Insights</h3>
+      <p>Instant overview of your income and expenses categorized for clarity.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Daily / Weekly / Monthly View</h3>
+      <p>Switch between timeframes to analyze how you're doing financially over time.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Interactive Charts</h3>
+      <p>Visualize data with smart line and pie charts powered by Chart.js.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Minimal & Responsive UI</h3>
+      <p>Designed to look great on any screen size, with soft transitions and animations.</p>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.querySelector('.nav-links');
+      menu.classList.toggle('active');
+    }
+     const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+        favicon.style.borderRadius = '50%';
+    }
+  </script>
+</body>
+</html>
