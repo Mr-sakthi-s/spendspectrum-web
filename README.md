@@ -26,16 +26,3 @@
 - **LocalStorage** (No backend or database required)
 
 ---
-
-## 📂 Project Structure
-
-```text
-/
-|--index.html         # Home Page
-|-- tracker.html       # Personal Expense Tracker
-|-- splitter.html      # Group Expense Splitter
-|-- about.html         # About Page
-|-- contact.html       # Contact Page
-|-- assets
-          |--logo.png           # Logo (used in nav and favicon)
-        
